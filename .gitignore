@@ -37,3 +37,13 @@ Thumbs.db
 *.tmp
 *.temp
 
+# 모델 가중치 파일 (크기가 커서 GitHub 제한 초과)
+weights/
+*.pth
+*.pth.tar
+*.pt
+*.h5
+*.onnx
+*.pb
+*.weights
+
