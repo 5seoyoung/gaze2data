@@ -47,3 +47,9 @@ weights/
 *.pb
 *.weights
 
+# 사용하지 않는 스크립트 파일 (로컬에만 유지)
+roi_gaze_tracking.py
+roi_gaze_tracking_gaze360.py
+integrated_gaze_tracking.py
+integrated_pose_tracking.py
+
