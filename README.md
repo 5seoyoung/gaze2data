@@ -1,15 +1,13 @@
 # From Gaze to Data: Creating New Marketing Insights
 
-**Research Period:** September 2024 - December 2024  
+**Research Period:** 2025.09.01-2025.12.12  
 **Authors:** Hyeonsik Jo*, Seoyoung Oh*, Junhyeok Lee  
 *Equal contribution  
 **Affiliation:** Kookmin University
 
 ## Abstract
 
-This study proposes a gaze-journey analysis framework that addresses the inherent limitations of purchase-log–based approaches, which capture only outcomes but not the underlying consumer decision processes. The proposed model performs ROI-level gaze estimation and enhances robustness by selectively incorporating 6DRepNet head-pose cues only when the primary model, Gaze360, exhibits high predictive uncertainty. Frame-level gaze predictions are further integrated with multi-object tracking to reconstruct each shopper's continuous gaze flow as a coherent temporal sequence. By quantitatively mapping gaze directions to shelf ROIs and restoring customer-specific gaze transitions over time, the framework generates gaze-based shopping-journey data that cannot be obtained from purchase logs alone.
-
-This design enables stable gaze estimation even under the challenging conditions of top-mounted CCTV—low facial resolution, occlusion, and frequent side/rear views. Moreover, the proposed framework provides practical utility for applications such as product placement optimization, attention analysis, and in-store path design.
+This study proposes a gaze-journey analysis framework that addresses the limitations of purchase-log–based approaches by capturing consumer decision processes through ROI-level gaze estimation. The framework integrates Gaze360 with 6DRepNet head-pose cues for robust estimation under challenging CCTV conditions, and employs multi-object tracking to reconstruct continuous gaze flows. By mapping gaze directions to shelf ROIs, the system generates shopping-journey data that cannot be obtained from purchase logs alone.
 
 ![Figure 1: Overview of the proposed visibility-aware gaze estimation framework.](https://github.com/user-attachments/assets/b5163cb5-69c8-49d2-9004-b652c68cebb2)
 
@@ -46,6 +44,8 @@ Code_verson2/
 - Direction-distance based ROI mapping (no depth information required)
 - Stable ROI assignment using minimum distance principle
 
+![Figure 2: Visualization of three RoI examples defined through our point-based polygon annotation system.](https://github.com/user-attachments/assets/67298dde-cdd5-423f-ae38-0505c39adc32)
+
 ### 3. Multi-Person Tracking
 - YOLOv8-based person detection
 - Lightweight IoU-based tracking algorithm
@@ -55,6 +55,8 @@ Code_verson2/
 - Integration of frame-level gaze predictions into temporal sequences
 - Restoration of customer-specific gaze transition patterns
 - Export ROI visit records to Excel files
+
+![Figure 3: Examples of RoI mapping results produced by our point-based polygon annotation system, illustrating stable detection and assignment in both single- and multi-person scenarios.](https://github.com/user-attachments/assets/52be8b78-0105-4637-b1be-ce529c7da1a0)
 
 ## Usage
 
@@ -152,17 +154,6 @@ Please check the license of each submodule:
 - 6DRepNet
 - Gaze360
 - YOLOv8-DeepSORT-Object-Tracking
-
-## Citation
-
-```bibtex
-@article{jo2024gaze2data,
-  title={From Gaze to Data: Creating New Marketing Insights},
-  author={Jo, Hyeonsik and Oh, Seoyoung and Lee, Junhyeok},
-  journal={Kookmin University},
-  year={2024}
-}
-```
 
 ## References
 
