@@ -55,7 +55,7 @@ for video in "${videos[@]}"; do
     python3 roi_gaze_tracking_gaze360_real.py \
         --source "${input_path}" \
         --output "${output_path}" \
-        --roi_config A2roi_default.json \
+        --roi_config config/A2roi_default.json \
         --gpu -1 \
         --min_frames 5
     
