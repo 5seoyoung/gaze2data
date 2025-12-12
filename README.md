@@ -11,58 +11,58 @@ This study proposes a gaze-journey analysis framework that addresses the inheren
 
 This design enables stable gaze estimation even under the challenging conditions of top-mounted CCTV—low facial resolution, occlusion, and frequent side/rear views. Moreover, the proposed framework provides practical utility for applications such as product placement optimization, attention analysis, and in-store path design.
 
-## 프로젝트 구조
+## Project Structure
 
 ```
 Code_verson2/
-├── config/                          # ROI 설정 파일
-│   ├── A2roi_default.json          # A2 그룹 ROI 설정
-│   ├── C3roi_default.json          # C3 그룹 ROI 설정
-│   ├── D5roi_default.json          # D5 그룹 ROI 설정
-│   └── roi_default.json            # 기본 ROI 설정
+├── config/                          # ROI configuration files
+│   ├── A2roi_default.json          # A2 group ROI configuration
+│   ├── C3roi_default.json          # C3 group ROI configuration
+│   ├── D5roi_default.json          # D5 group ROI configuration
+│   └── roi_default.json            # Default ROI configuration
 │
-├── scripts/                         # 실행 스크립트
-│   └── batch_inference.sh          # 배치 인퍼런스 스크립트
+├── scripts/                         # Execution scripts
+│   └── batch_inference.sh          # Batch inference script
 │
-├── roi_gaze_tracking_gaze360_real.py  # 메인 시선 추적 스크립트
-├── setup_roi_only.py               # ROI 설정 도구
+├── roi_gaze_tracking_gaze360_real.py  # Main gaze tracking script
+├── setup_roi_only.py               # ROI setup tool
 │
-├── 6DRepNet/                        # 6DRepNet 모델 (헤드 포즈 추정)
-├── gaze360/                         # Gaze360 모델 (시선 추정)
-└── YOLOv8-DeepSORT-Object-Tracking/ # YOLOv8 및 DeepSORT (객체 탐지 및 추적)
+├── 6DRepNet/                        # 6DRepNet model (head pose estimation)
+├── gaze360/                         # Gaze360 model (gaze estimation)
+└── YOLOv8-DeepSORT-Object-Tracking/ # YOLOv8 and DeepSORT (object detection and tracking)
 ```
 
-## 주요 기능
+## Key Features
 
 ### 1. Visibility-Aware Gaze Estimation
-- **Binocular (양안)**: Gaze360을 사용한 고정밀 시선 추정
-- **Monocular (단안)**: 6DRepNet 기반 헤드 포즈 추정으로 fallback
-- **Non-visible (비가시)**: 신뢰도가 낮은 프레임 제외
+- **Binocular**: High-precision gaze estimation using Gaze360
+- **Monocular**: Fallback to 6DRepNet-based head pose estimation
+- **Non-visible**: Exclude frames with low reliability
 
 ### 2. ROI-based Gaze Mapping
-- 점 기반 다각형 ROI 정의 (사다리꼴, 기울어진 형태 지원)
-- 방향-거리 기반 ROI 매핑 (깊이 정보 불필요)
-- 최소 거리 원칙을 통한 안정적인 ROI 할당
+- Point-based polygon ROI definition (supports trapezoids, skewed shapes)
+- Direction-distance based ROI mapping (no depth information required)
+- Stable ROI assignment using minimum distance principle
 
 ### 3. Multi-Person Tracking
-- YOLOv8 기반 사람 탐지
-- IoU 기반 경량 추적 알고리즘
-- 일관된 ID 유지로 시간적 연속성 보장
+- YOLOv8-based person detection
+- Lightweight IoU-based tracking algorithm
+- Consistent ID maintenance for temporal continuity
 
 ### 4. Gaze Journey Reconstruction
-- 프레임 레벨 시선 예측을 시간적 시퀀스로 통합
-- 고객별 시선 전환 패턴 복원
-- ROI 방문 기록을 엑셀 파일로 저장
+- Integration of frame-level gaze predictions into temporal sequences
+- Restoration of customer-specific gaze transition patterns
+- Export ROI visit records to Excel files
 
-## 사용 방법
+## Usage
 
-### 1. ROI 설정
+### 1. ROI Configuration
 
 ```bash
 python3 setup_roi_only.py --source Input/video.mov --output config/roi_config.json
 ```
 
-### 2. 단일 비디오 인퍼런스
+### 2. Single Video Inference
 
 ```bash
 python3 roi_gaze_tracking_gaze360_real.py \
@@ -73,24 +73,24 @@ python3 roi_gaze_tracking_gaze360_real.py \
     --min_frames 5
 ```
 
-### 3. 배치 인퍼런스
+### 3. Batch Inference
 
 ```bash
 bash scripts/batch_inference.sh
 ```
 
-## 출력 파일
+## Output Files
 
-- `{video_name}_infer.mp4`: 시선 추적 결과 비디오
-  - ROI 영역 시각화
-  - 사람별 ID 및 시선 벡터 표시
-  - ROI 매핑 결과 오버레이
+- `{video_name}_infer.mp4`: Gaze tracking result video
+  - ROI region visualization
+  - Person ID and gaze vector display
+  - ROI mapping result overlay
 
-- `{video_name}_infer_gaze_journey.xlsx`: ROI 방문 기록 엑셀 파일
-  - Person ID별 ROI 방문 기록
-  - 시간 순서대로 방문한 ROI 시퀀스
+- `{video_name}_infer_gaze_journey.xlsx`: ROI visit record Excel file
+  - ROI visit records per Person ID
+  - ROI sequence visited in chronological order
 
-## 실험 결과
+## Experimental Results
 
 ### Set-Matching Accuracy
 
@@ -108,50 +108,50 @@ bash scripts/batch_inference.sh
 - Junhyeok: 0.80
 - Seoyoung: 0.84
 
-## 요구사항
+## Requirements
 
 - Python 3.8+
 - PyTorch
 - OpenCV
 - pandas
 - ultralytics (YOLOv8)
-- 기타 의존성 (requirements.txt 참조)
+- Other dependencies (see requirements.txt)
 
-## 모델 가중치
+## Model Weights
 
-모델 가중치 파일은 `weights/` 폴더에 저장되어야 합니다:
-- `6DRepNet_300W_LP_AFLW2000.pth` (6DRepNet 헤드 포즈 추정)
-- `gaze360_model.pth.tar` (Gaze360 시선 추정)
-- `yolov8n.pt` (YOLOv8 객체 탐지)
-- `yolov8n-face.pt` (YOLOv8 얼굴 탐지)
+Model weight files should be stored in the `weights/` folder:
+- `6DRepNet_300W_LP_AFLW2000.pth` (6DRepNet head pose estimation)
+- `gaze360_model.pth.tar` (Gaze360 gaze estimation)
+- `yolov8n.pt` (YOLOv8 object detection)
+- `yolov8n-face.pt` (YOLOv8 face detection)
 
-**참고**: 가중치 파일은 크기 제한으로 인해 Git 저장소에 포함되지 않습니다.
+**Note**: Weight files are not included in the Git repository due to size limitations.
 
-## 데이터셋
+## Dataset
 
-- **환경**: 실제 편의점 환경 (서울 소재 대학교 내)
-- **카메라**: 천장 고정 CCTV (높이 2.3-2.6m)
-- **데이터**: 약 40개 비디오 클립 (각 10-20초)
-- **시나리오**: 
-  - 단일 인물 시나리오 (~25개)
-  - 다중 인물 시나리오 (~15개)
-- **ROI 구조**: 6개 Zone (A-F), 각 Zone 내 세부 ROI
+- **Environment**: Real convenience store environment (located in a university in Seoul)
+- **Camera**: Ceiling-mounted fixed CCTV (height 2.3-2.6m)
+- **Data**: Approximately 40 video clips (10-20 seconds each)
+- **Scenarios**: 
+  - Single-person scenarios (~25 clips)
+  - Multi-person scenarios (~15 clips)
+- **ROI Structure**: 6 Zones (A-F), detailed ROIs within each Zone
 
-## 주요 기여
+## Key Contributions
 
-1. **Overhead CCTV 환경 대응**: 낮은 얼굴 해상도, 비정면 시야, 부분 가림 등 실제 CCTV 환경의 제약 조건 처리
-2. **Selective Correction 메커니즘**: Gaze360의 불확실성이 높을 때만 6DRepNet을 선택적으로 활용
-3. **ROI 레벨 시선 분석**: 픽셀 단위가 아닌 의미론적 ROI(제품 카테고리, 선반 영역) 기반 분석
-4. **Gaze Journey 데이터 생성**: 구매 로그만으로는 얻을 수 없는 고객 시선 여정 데이터 생성
+1. **Overhead CCTV Environment Adaptation**: Handles constraints of real CCTV environments including low facial resolution, non-frontal views, and partial occlusions
+2. **Selective Correction Mechanism**: Selectively incorporates 6DRepNet only when Gaze360 exhibits high uncertainty
+3. **ROI-level Gaze Analysis**: Semantic ROI-based analysis (product categories, shelf regions) rather than pixel-level
+4. **Gaze Journey Data Generation**: Generates customer gaze journey data that cannot be obtained from purchase logs alone
 
-## 라이선스
+## License
 
-각 서브모듈의 라이선스를 확인하세요:
+Please check the license of each submodule:
 - 6DRepNet
 - Gaze360
 - YOLOv8-DeepSORT-Object-Tracking
 
-## 인용
+## Citation
 
 ```bibtex
 @article{jo2024gaze2data,
@@ -162,7 +162,7 @@ bash scripts/batch_inference.sh
 }
 ```
 
-## 참고문헌
+## References
 
 - Gaze360: Physically Unconstrained Gaze Estimation in the Wild (ICCV 2019)
 - 6DRepNet: 6D Rotation Representation for Unconstrained Head Pose Estimation (ICIP 2022)
