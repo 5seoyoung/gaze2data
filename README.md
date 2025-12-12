@@ -11,6 +11,8 @@ This study proposes a gaze-journey analysis framework that addresses the inheren
 
 This design enables stable gaze estimation even under the challenging conditions of top-mounted CCTV—low facial resolution, occlusion, and frequent side/rear views. Moreover, the proposed framework provides practical utility for applications such as product placement optimization, attention analysis, and in-store path design.
 
+![Figure 1: Overview of the proposed visibility-aware gaze estimation framework.](https://github.com/user-attachments/assets/b5163cb5-69c8-49d2-9004-b652c68cebb2)
+
 ## Project Structure
 
 ```
